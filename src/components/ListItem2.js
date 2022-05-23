@@ -9,7 +9,9 @@ export default function ListItem({
   isFree,
   price,
   onPress,
+  showButton
 }) {
+  showButton = showButton === false? false : true;
   return (
     <View style={{
       flexDirection:'row',
@@ -23,15 +25,7 @@ export default function ListItem({
           style={{width: 55, height: 55, borderRadius: 10, marginRight: 8}}
         />
         <View style={{width: windowWidth - 220}}>
-          <Text
-            style={{
-              color: '#333',
-              fontFamily: 'Roboto-Medium',
-              fontSize: 14,
-            }}>
-            {subTitle}
-          </Text>
-          <Text
+        <Text
             numberOfLines={1}
             style={{
               color: '#333',
@@ -41,10 +35,25 @@ export default function ListItem({
             }}>
             {title}
           </Text>
+          <Text
+            style={{
+              color: '#333',
+              fontFamily: 'Roboto-Medium',
+              fontSize: 14,
+            }}>
+            {subTitle}
+          </Text>
+          {price && <Text
+            style={{
+              color: '#333',
+              fontFamily: 'Roboto-Medium',
+              fontSize: 14,
+            }}>
+            Price : {price}
+          </Text>}
         </View>
       </View>
-
-      <TouchableOpacity onPress={onPress} style={{
+      {showButton && <TouchableOpacity onPress={onPress} style={{
         backgroundColor:'#0aada8',
         padding:10,
         width: 100,
@@ -58,7 +67,8 @@ export default function ListItem({
         }}>
           Book Now
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity>}
+      
     </View>
   );
 }

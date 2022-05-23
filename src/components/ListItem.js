@@ -24,15 +24,7 @@ export default function ListItem({
           style={{width: 200, height: 150, borderRadius: 10, marginRight: 8}}
         />
         <View style={{width: windowWidth - 220}}>
-          <Text
-            style={{
-              color: '#333',
-              fontFamily: 'Roboto-Medium',
-              fontSize: 14,
-            }}>
-            {subTitle}
-          </Text>
-          <Text
+        <Text
             numberOfLines={1}
             style={{
               color: '#333',
@@ -42,6 +34,15 @@ export default function ListItem({
             }}>
             {title}
           </Text>
+          <Text
+            style={{
+              color: '#333',
+              fontFamily: 'Roboto-Medium',
+              fontSize: 14,
+            }}>
+            {subTitle}
+          </Text>
+
           <TouchableOpacity
             onPress={onPress}
             style={{

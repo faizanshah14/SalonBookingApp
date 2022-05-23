@@ -17,7 +17,7 @@ import InputField from '../components/InputField';
 
 const LoginScreen = ({navigation}) => {
 
-  const [email, setEmail] = React.useState('hassan.khan2163@gmail.com');
+  const [email, setEmail] = React.useState('hassan@gmail.com');
   const [password, setPassword] = React.useState('123456789');
   const [user, setUser] = React.useState(null);
   const [token, setToken] = React.useState(null);

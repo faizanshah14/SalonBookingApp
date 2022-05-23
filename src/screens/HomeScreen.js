@@ -16,12 +16,13 @@ import BannerSlider from '../components/BannerSlider';
 import {windowWidth} from '../utils/Dimensions';
 
 import {freeGames, paidGames, sliderData} from '../model/data';
+import {getAllSalons} from '../services/SalonServices';
 import CustomSwitch from '../components/CustomSwitch';
 import ListItem from '../components/ListItem';
 
 export default function HomeScreen({navigation}) {
   const [gamesTab, setGamesTab] = useState(1);
-
+  const [salons, setSalons] = useState([]);
   const renderBanner = ({item, index}) => {
     return <BannerSlider data={item} />;
   };
@@ -34,6 +35,10 @@ export default function HomeScreen({navigation}) {
     AsyncStorage.getItem('user').then(user => {
       setUser(JSON.parse(user));
     });
+    getAllSalons().then(res => {
+      setSalons(res.data);
+      console.log(res.data);
+    })
   }, []);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
@@ -108,22 +113,20 @@ export default function HomeScreen({navigation}) {
           /> */}
         </View>
 
-        {gamesTab == 1 &&
-          freeGames.map(item => (
+        {salons  &&
+          salons.map(item => (
             <ListItem
               key={item.id}
-              photo={item.poster}
-              title={item.title}
-              subTitle={item.subtitle}
-              isFree={item.isFree}
+              photo={item.profilePicture }
+              title={item.name}
+              subTitle={item.contactNo}
+              isFree={'Yes'}
               onPress={() => {
                 navigation.navigate('GameDetails', {
                   title: item.title,
                   id: item.id,
-                  photo: item.poster,
-                  subTitle: item.subtitle,
-                  isFree: item.isFree,
-                  price: item.price,
+                  photo: item.profilePicture,
+                  subTitle: item.contactNo,
                 });
               }}
             />

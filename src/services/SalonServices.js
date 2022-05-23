@@ -1,28 +1,27 @@
 import axios from "axios";
-import { getCurrentUser, authHeader } from "./Commons";
-axios.defaults.headers = authHeader();
-export const getAllServicesForSalon = async () => {
+import { baseUrl } from "./Commons";
+axios.defaults.baseURL = baseUrl;
+export const getAllSalons = async () => {
   return await axios
-    .get("services/getAllServicesForSalon/" + getCurrentUser().id)
+    .get("user/getAllSalons")
     .then((response) => response.data)
     .catch((error) => error.response);
-};
-
-export const createService = async (
-  serviceName,
-  price,
-  serviceDescription,
-  serviceType,
-  userId
-) => {
-  userId = getCurrentUser().id;
+}
+export const getAllServicesForSalon = async (id) => {
   return await axios
-    .post("services/createServices", {  
-        serviceName,
-        price,
-        serviceDescription,
-        serviceType,
-        userId})
+    .get("services/getAllServicesForSalon/"+id)
     .then((response) => response.data)
     .catch((error) => error.response);
-};
+}
+export const createOrder = async (data) => {
+  return await axios
+    .post("orders/createOrder",data)
+    .then((response) => response.data)
+    .catch((error) => error.response);
+}
+export const getAllOrdersForSaloon = async (userId) => {
+  return await axios
+    .get("orders/getAllOrdersForSaloon/"+userId)
+    .then((response) => response.data)
+    .catch((error) => error.response);
+}

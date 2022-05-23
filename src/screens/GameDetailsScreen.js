@@ -2,9 +2,23 @@ import React from 'react';
 import {View, Text, Image, ScrollView} from 'react-native';
 import {windowWidth} from '../utils/Dimensions';
 import {freeGames, paidGames, sliderData} from '../model/data';
+import {getAllServicesForSalon, createOrder} from '../services/SalonServices';
+import  AsyncStorage  from '@react-native-async-storage/async-storage';
 import ListItem from '../components/ListItem2';
 const GameDetailsScreen = ({navigation, route}) => {
-  const {photo, title, subTitle, isFree, price} = route.params;
+  const {id,photo, title, subTitle, isFree, price} = route.params;
+  const [services, setServices] = React.useState([]);
+  const [userid, setUserid] = React.useState(null);
+  React.useState(() => {
+    getAllServicesForSalon(id).then(res => {
+      setServices(res.data);
+      console.log(res.data);
+    });
+    AsyncStorage.getItem('user').then(res => {
+        console.log('res',JSON.parse(res).id);
+        setUserid(JSON.parse(res).id);
+      });
+  }, [id]);
   console.log(photo, title, subTitle, isFree, price);
   return (
     <ScrollView style={{flex: 1}}>
@@ -47,15 +61,27 @@ const GameDetailsScreen = ({navigation, route}) => {
 
       </View>
 
-      { paidGames.map(item => (
+      {services&& services.map(item => (
             <ListItem
               key={item.id}
-              photo={item.poster}
-              title={item.title}
-              subTitle={item.subtitle}
-              isFree={item.isFree}
-              onPress={() => {
-
+              photo={require('../assets/images/misc/listIcon.png')}
+              title={item.serviceName}
+              subTitle={item.serviceDescription}
+              price={item.price}
+              onPress={async (items) => {
+                console.log(item.id);
+                const data = {
+                  userId: userid,
+                  salonId: id,
+                  serviceId: item.id,
+                }
+                console.log(data);
+                const res = await createOrder(data);
+                console.log(res);
+                if(res.status === 'ok'){
+                  console.log('res');
+                  navigation.navigate('Cart')
+                }
               }}
             />
           ))}
