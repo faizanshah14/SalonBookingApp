@@ -26,7 +26,7 @@ const GameDetailsScreen = ({navigation, route}) => {
       {/* <Text>Game Details Screen</Text>
       <Text>{route.params?.title}</Text> */}
       <Image
-        source={photo}
+        source={photo|| require('../assets/images/misc/shopIcon.png') }
         style={{width: windowWidth, height: 200, borderRadius: 10, marginRight: 8}}
       />
       <View

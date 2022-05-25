@@ -114,10 +114,10 @@ export default function HomeScreen({navigation}) {
         </View>
 
         {salons  &&
-          salons.map(item => (
+          salons?.map(item => (
             <ListItem
               key={item.id}
-              photo={item.profilePicture }
+              photo={item.profilePicture || require('../assets/images/misc/shopIcon.png') }
               title={item.name}
               subTitle={item.contactNo}
               isFree={'Yes'}
